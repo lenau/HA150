@@ -1,5 +1,12 @@
 # HA150
 
+<details>
+<summary>Click to expand</summary>
+
+whatever
+
+</details>
+
 ## Exercise 2 - Read from a Single Table Using the SELECT Statement
 ```
 SELECT *
