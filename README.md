@@ -7,7 +7,7 @@ whatever
 
 </details>
 
-<details><summary>## Exercise 2 - Read from a Single Table Using the SELECT Statement</summary>
+<details><summary>Exercise 2 - Read from a Single Table Using the SELECT Statement</summary>
 ```
 SELECT *
  FROM Employee;
@@ -66,7 +66,8 @@ SELECT *
  SELECT *
  FROM Employee
  WHERE  Name LIKE 'M__K%';
-```</details>
+```
+</details>
 ## Exercise 3 - Understand NULL Values
 ```
 SELECT *
