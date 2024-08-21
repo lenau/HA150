@@ -227,7 +227,7 @@ where "SECTION" like 'trace' and key like 'trac%'; ;
 
 
 ALTER SYSTEM ALTER CONFIGURATION ('indexserver.ini','SYSTEM') 
-SET ('traceprofile_MyTrace##','sql_user') = 'STUDENT20', 
+SET ('traceprofile_MyTrace##','sql_user') = 'STUDENT##', 
 ('traceprofile_MyTrace##','sqlopttime') = 'debug'
  WITH RECONFIGURE;
 
