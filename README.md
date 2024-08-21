@@ -198,6 +198,9 @@ SELECT DNumber, "HA150::RemainderDays_Variablevalue"(RemainderDays, DepID) FROM 
 ```
 ## Exercise 15 - Monitor Suboptimal SQL 
 ```
+ --Stored Procedure Call - if execution plan exists renew it
+call "my_sql_challenge" ('01.01.2014','23.02.2022',?) with hint ( IGNORE_PLAN_CACHE );
+
 select TOTAL_EXECUTION_TIME as "Duration", STATEMENT_STRING as "BLOCKER", * 
 from "SYS"."M_SQL_PLAN_CACHE" 
 where SCHEMA_Name = 'STUDENT##'
@@ -228,11 +231,9 @@ SET ('traceprofile_MyTrace##','sql_user') = 'STUDENT20',
 ('traceprofile_MyTrace##','sqlopttime') = 'debug'
  WITH RECONFIGURE;
 
- 
  --Stored Procedure Call - if execution plan exists renew it
 call "my_sql_challenge" ('01.01.2014','23.02.2022',?) with hint ( IGNORE_PLAN_CACHE );
 
- 
 ALTER SYSTEM ALTER CONFIGURATION ('indexserver.ini','SYSTEM') 
 UNSET ('traceprofile_MyTrace##','sql_user') , 
 ('traceprofile_MyTrace##','sqloptime')
