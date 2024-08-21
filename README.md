@@ -196,6 +196,48 @@ SELECT DNumber, "HA150::Remainderdays_Fixedvalue"(RemainderDays)
 
 SELECT DNumber, "HA150::RemainderDays_Variablevalue"(RemainderDays, DepID) FROM "HA150::EMPLOYEE";
 ```
+## Exercise 15 - Monitor Suboptimal SQL 
+```
+select TOTAL_EXECUTION_TIME as "Duration", STATEMENT_STRING as "BLOCKER", * 
+from "SYS"."M_SQL_PLAN_CACHE" 
+where SCHEMA_Name = 'STUDENT##'
+order by TOTAL_EXECUTION_TIME desc; 
+
+--M_EXPENSIVE_STATEMENTS Select 
+SELECT "STATEMENT_STRING","OBJECT_NAME","DURATION_MICROSEC", *
+FROM "SYS"."M_EXPENSIVE_STATEMENTS" where db_user = 'STUDENT20'
+
+--Checking Activation Status of Exepensive Statement Tracing
+SELECT "FILE_NAME","LAYER_NAME","SECTION","KEY","VALUE"
+FROM "SYS"."M_INIFILE_CONTENTS"
+where "SECTION" like 'expen%';
+
+--Activate Exepensive Statement Tracing
+ALTER SYSTEM ALTER CONFIGURATION ('global.ini','SYSTEM') 
+SET ('expensive_statement','enable') = 'TRUE'
+WITH RECONFIGURE;
+
+
+SELECT "FILE_NAME","LAYER_NAME","SECTION","KEY","VALUE"
+FROM "SYS"."M_INIFILE_CONTENTS"
+where "SECTION" like 'trace' and key like 'trac%'; ;
+
+
+ALTER SYSTEM ALTER CONFIGURATION ('indexserver.ini','SYSTEM') 
+SET ('traceprofile_MyTrace##','sql_user') = 'STUDENT20', 
+('traceprofile_MyTrace##','sqlopttime') = 'debug'
+ WITH RECONFIGURE;
+
+ 
+ --Stored Procedure Call - if execution plan exists renew it
+call "my_sql_challenge" ('01.01.2014','23.02.2022',?) with hint ( IGNORE_PLAN_CACHE );
+
+ 
+ALTER SYSTEM ALTER CONFIGURATION ('indexserver.ini','SYSTEM') 
+UNSET ('traceprofile_MyTrace##','sql_user') , 
+('traceprofile_MyTrace##','sqloptime')
+ WITH RECONFIGURE;
+```
 ## Exercise 27 - Use Nested Queries 
 ```
 SELECT *
